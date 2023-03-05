@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<conio.h>
+#include <string.h>
+#include <ctype.h>
+#define N 100
+
+struct agenda
+{
+   char nume[20];
+   char numar[11];
+}a[N];
+int ct;
+
+void introducere_persoane(int &ct)
+{
+  printf("introduceti numele persoanei \n");
+  scanf("%s", &a[ct].nume);
+  printf("introduceti numarul persoanei \n");
+  scanf("%s", &a[ct].numar);
+  ct++;
+}
+
+void listare()
+{
+   int i;
+   char r[20],nr[20];
+   int ok=0;
+   while(ok==0)
+   {
+      ok=1;
+      for(i=0;i<ct-1;i++)
+     if((strcmp(a[i].nume, a[i+1].nume))>0)
+          {   strcpy(r,a[i].nume);  strcpy(nr,a[i].numar);
+              strcpy(a[i].nume,a[i+1].nume);  strcpy(a[i].numar,a[i+1].numar);
+              strcpy(a[i+1].nume,r);     strcpy(a[i+1].numar, nr);
+              ok=0;
+          }
+
+      }
+    for(i=0;i<ct;i++)
+       printf("%s %s \n", a[i].nume, a[i].numar);
+}
+void cautare()
+{
+    int i;
+    char d[20];
+    printf("introduceti numele \n");
+    scanf("%s", &d);
+    for(i=0;i<ct;i++)
+     {
+          if(strcmp(a[i].nume, d)==0)
+          printf("%s  %s\n", a[i].nume, a[i].numar);
+     }
+}
+
+void cautarenr()
+{
+    int i;
+    char d[20];
+    printf("introduceti numaru \n");
+    scanf("%s", &d);
+    for(i=0;i<ct;i++)
+     {
+          if(strcmp(a[i].numar, d)==0)
+          printf("%s  %s\n", a[i].nume, a[i].numar);
+     }
+}
+
+void main(void)
+{
+   char r;
+   do{
+       printf("introduceti pers in agenda: A\n");
+       printf("afisare lista alfabetica: B\n");
+       printf("cautare dupa nume: C\n");
+       printf("cautare dupa numar: D\n");
+       printf("iesire program: Q\n");
+       r=getche(); r=toupper(r);
+       if(r=='A') introducere_persoane(ct);
+       if(r=='B') listare();
+       if(r=='C') cautare();
+       if(r=='D') cautarenr();
+       getch();  clrscr();
+     }while(r!='Q');
+}

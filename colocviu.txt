@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+struct agenda
+{char nume;
+char numar;
+}contact[100], copie;
+
+void listare(int n)
+{int i;
+ printf("\nAgenda este: ");
+ for(i=1;i<=n;i++)
+ printf("%c%c ",contact[i].nume,contact[i].numar);}
+
+void ordonare(int n)
+{int i,j;
+ for(i=1;i<=n;i++)
+  for(j=i+1;j<=n;j++)
+   if(contact[i].nume>contact[j].nume)
+    {
+    copie.nume=contact[i].nume;
+    contact[i].nume=contact[j].nume;
+    contact[j].nume=copie.nume;
+
+    copie.numar=contact[i].numar;
+    contact[i].numar=contact[j].numar;
+    contact[j].numar=copie.numar;
+    }
+   listare(n);
+  }
+
+void cautare_nume(int n)
+{int i,gasit=0;
+ char num;
+ printf("\nCare este numele contactului? ");
+ num=getche();
+ for (i=1;i<=n;i++)
+ if(num==contact[i].nume)
+  {printf("\nContactul %c a fost gasit! Numarul acestuia este %c\n",contact[i].nume,contact[i].numar);
+   gasit=1;}
+ if(gasit==0)
+  printf("\nContactul nu a fost gasit.");
+}
+
+void cautare_numar(int n)
+{int i,gasit=0;
+ char num;
+ printf("\nCare este numarul contactului? ");
+ num=getche();
+ for (i=1;i<=n;i++)
+ if(num==contact[i].numar)
+  {printf("\nContactul %c a fost gasit! Numele acestuia este %c\n",contact[i].numar,contact[i].nume);
+   gasit=1;}
+ if(gasit==0)
+  printf("\nContactul nu a fost gasit.");
+}
+
+void main(void)
+{
+ char optiune;
+ int iesire=0,k,n=1,i;
+ do{
+ printf("\nAlegeti o optiune din urmatorul meniu\n1.Introduce contact\n2.Listare alfabetica\n3.Cautare dupa nume\n4.Cautare dupa numarul de telefon\n5.Iesire\n");
+ optiune=getche();
+ switch(optiune){
+ case'1':
+ printf("\nCati studenti doriti sa introduceti?\n");
+ scanf("%1d",&k);
+ for(i=n;i<=n+k-1;i++)
+ {printf("\nNumele contactului %d este: ",i);
+  contact[i].nume=getche();
+  printf("\nNumarul contactului %d este: ",i);
+  contact[i].numar=getche();}
+ n=n+k;
+ break;
+ case'2':
+ ordonare(n);
+ break;
+ case'3':
+ cautare_nume(n);
+ break;
+ case'4':
+ cautare_numar(n);
+ break;
+ case'5':iesire=1;
+	 break;
+}
+}while(iesire==0);
+}
